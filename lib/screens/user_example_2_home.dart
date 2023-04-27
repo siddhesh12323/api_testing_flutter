@@ -13,6 +13,11 @@ class Home2 extends StatefulWidget {
 }
 
 class _Home2State extends State<Home2> {
+  final snackBar = const SnackBar(
+    content: Text('Swiped right!'),
+    duration: Duration(seconds: 3),
+  );
+
   List<UserModel> userList = [];
   Future<List<UserModel>> getUsersAPI() async {
     final response =
@@ -31,38 +36,57 @@ class _Home2State extends State<Home2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('User Model')),
+      appBar: AppBar(title: const Text('Nested API')),
       body: Column(
         children: [
           Expanded(
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text('Loading...');
-                } else {
-                  return ListView.builder(
-                    itemBuilder: (context, index) {
-                    return Card(
-                      child: Column(
-                        children: [
-                          RowDisplay(
-                              title: 'Name',
-                              value: snapshot.data![index].name.toString()),
-                          RowDisplay(
-                              title: 'Username',
-                              value: snapshot.data![index].username.toString()),
-                          RowDisplay(
-                              title: 'E-mail',
-                              value: snapshot.data![index].email.toString())
-                        ],
-                      ),
+            child: GestureDetector(
+              child: FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Loading...');
+                  } else {
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Column(
+                            children: [
+                              RowDisplay(
+                                  title: 'Name',
+                                  value: snapshot.data![index].name.toString()),
+                              RowDisplay(
+                                  title: 'Username',
+                                  value: snapshot.data![index].username
+                                      .toString()),
+                              RowDisplay(
+                                  title: 'E-mail',
+                                  value:
+                                      snapshot.data![index].email.toString()),
+                              RowDisplay(
+                                  title: 'Address',
+                                  value:
+                                      '${snapshot.data![index].address!.street.toString()}, ${snapshot.data![index].address!.suite.toString()}, ${snapshot.data![index].address!.city.toString()}')
+                            ],
+                          ),
+                        );
+                      },
+                      itemCount: userList.length,
                     );
-                  },
-                  itemCount: userList.length,
-                  );
+                  }
+                },
+                future: getUsersAPI(),
+              ),
+              onHorizontalDragEnd: (details) {
+                //Right swipe
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                if (details.velocity.pixelsPerSecond.dx > 0) {
+                  Navigator.pop(context);
                 }
+                //Left Swipe
+                if (details.velocity.pixelsPerSecond.dx < 0) {
+                  Navigator.pushNamed(context, '/productData');
+                } 
               },
-              future: getUsersAPI(),
             ),
           )
         ],

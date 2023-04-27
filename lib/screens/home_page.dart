@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:quotes_for_you_testing/screens/user_example_2_home.dart';
 
 import '../model/post_model.dart';
 
@@ -13,6 +14,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final snackBar = const SnackBar(
+              content: Text('Swiped left!'),
+              duration: Duration(seconds: 3),
+            );
+            
   List<PostModel> postList = [];
   Future<List<PostModel>> getPostAPI() async {
     final response =
@@ -35,49 +41,63 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           Expanded(
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text('Loading...');
-                } else {
-                  return ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Title ${index + 1}:',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
+            child: GestureDetector(
+              child: FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Loading...');
+                  } else {
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Title ${index + 1}:',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 24),
+                                  ),
+                                  Text(
+                                    postList[index].title.toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    'Description ${index + 1}:',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 24),
+                                  ),
+                                  Text(
+                                    postList[index].body.toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              postList[index].title.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Description ${index + 1}:',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
-                            ),
-                            Text(
-                              postList[index].body.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount: postList.length,
-                  );
+                          ),
+                        );
+                      },
+                      itemCount: postList.length,
+                    );
+                  }
+                },
+                future: getPostAPI(),
+              ),
+              onHorizontalDragEnd: (details) {
+                if (details.velocity.pixelsPerSecond.dx < 0) {
+                  //Left Swipe
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pushNamed(context, '/userData');
                 }
               },
-              future: getPostAPI(),
             ),
           )
         ],
