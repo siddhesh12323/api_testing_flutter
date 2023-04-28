@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quotes_for_you_testing/screens/home_page.dart';
 import 'package:quotes_for_you_testing/screens/product_page_example.dart';
 import 'package:quotes_for_you_testing/screens/random_quote.dart';
+import 'package:quotes_for_you_testing/screens/sign_up.dart';
 import 'package:quotes_for_you_testing/screens/user_example_2_home.dart';
 // import 'data/get_value.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/userData':(context) => const Home2(),
         '/productData':(context) => const Home3(),
         '/randomQuote':(context) => const Home4(),
+        '/signUp':(context) => const SignUp(),
       },
       theme: ThemeData(primarySwatch: Colors.cyan),
     );

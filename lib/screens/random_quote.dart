@@ -13,9 +13,6 @@ class Home4 extends StatefulWidget {
 }
 
 class _Home4State extends State<Home4> {
-
-  
-
   List<QuoteModel> quoteList = [];
   Future<List<QuoteModel>> getRandomQuote() async {
     final response =

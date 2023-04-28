@@ -132,6 +132,12 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/randomQuote');
               },
             ),
+            ListTile(
+              title: const Text('Sign Up'),
+              onTap: () {
+                Navigator.pushNamed(context, '/signUp');
+              },
+            ),
           ],
         ),
       ),
