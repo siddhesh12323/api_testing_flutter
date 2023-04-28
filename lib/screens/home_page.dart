@@ -15,10 +15,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final snackBar = const SnackBar(
-              content: Text('Swiped left!'),
-              duration: Duration(seconds: 3),
-            );
-            
+    content: Text('Swiped left!'),
+    duration: Duration(seconds: 3),
+  );
+
   List<PostModel> postList = [];
   Future<List<PostModel>> getPostAPI() async {
     final response =
@@ -61,7 +61,8 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'Title ${index + 1}:',
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.bold, fontSize: 24),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24),
                                   ),
                                   Text(
                                     postList[index].title.toString(),
@@ -73,7 +74,8 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'Description ${index + 1}:',
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.bold, fontSize: 24),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24),
                                   ),
                                   Text(
                                     postList[index].body.toString(),
@@ -101,6 +103,37 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Pages'),
+            ),
+            ListTile(
+              title: const Text('Nested API'),
+              onTap: () {
+                Navigator.pushNamed(context, '/userData');
+              },
+            ),
+            ListTile(
+              title: const Text('Product Model'),
+              onTap: () {
+                Navigator.pushNamed(context, '/productData');
+              },
+            ),
+            ListTile(
+              title: const Text('Random Quote'),
+              onTap: () {
+                Navigator.pushNamed(context, '/randomQuote');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
