@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:quotes_for_you_testing/model/product_model.dart';
 import 'package:quotes_for_you_testing/model/quote_model.dart';
 
-class Home4 extends StatefulWidget {
-  const Home4({super.key});
+class RandomQuote extends StatefulWidget {
+  const RandomQuote({super.key});
 
   @override
-  State<Home4> createState() => _Home4State();
+  State<RandomQuote> createState() => _RandomQuoteState();
 }
 
-class _Home4State extends State<Home4> {
+class _RandomQuoteState extends State<RandomQuote> {
   List<QuoteModel> quoteList = [];
   Future<List<QuoteModel>> getRandomQuote() async {
     final response =

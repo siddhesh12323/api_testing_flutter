@@ -138,6 +138,12 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/signUp');
               },
             ),
+            ListTile(
+              title: const Text('Upload an Image'),
+              onTap: () {
+                Navigator.pushNamed(context, '/uploadImage');
+              },
+            ),
           ],
         ),
       ),

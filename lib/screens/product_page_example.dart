@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:quotes_for_you_testing/model/product_model.dart';
 
-class Home3 extends StatefulWidget {
-  const Home3({super.key});
+class ProductPage extends StatefulWidget {
+  const ProductPage({super.key});
 
   @override
-  State<Home3> createState() => _Home3State();
+  State<ProductPage> createState() => _ProductPageState();
 }
 
-class _Home3State extends State<Home3> {
+class _ProductPageState extends State<ProductPage> {
   Future<ProductModel> getProductsAPI() async {
     final response = await http.get(
         Uri.parse('https://webhook.site/39671690-47e0-491f-a24c-ef2138f13857'));

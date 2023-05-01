@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import '../model/user_model.dart';
 
-class Home2 extends StatefulWidget {
-  const Home2({super.key});
+class UserData extends StatefulWidget {
+  const UserData({super.key});
 
   @override
-  State<Home2> createState() => _Home2State();
+  State<UserData> createState() => _UserDataState();
 }
 
-class _Home2State extends State<Home2> {
+class _UserDataState extends State<UserData> {
   final snackBar = const SnackBar(
     content: Text('Swiped right!'),
     duration: Duration(seconds: 3),
